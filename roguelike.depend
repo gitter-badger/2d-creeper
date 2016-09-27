@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1474987434 source:e:\roguelike\main.c
+	<Windows.h>
+	<conio.h>
+

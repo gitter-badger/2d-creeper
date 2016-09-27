@@ -1,10 +1,17 @@
 #include <Windows.h>
 #include <conio.h>
-typedef struct
+
+struct Actor;
+typedef void (*fptr)(struct Actor*);
+
+typedef struct Actor
 {
     int x,y;
     char shape;
     int exist;
+	fptr tick_fn;
+	char color;
+
 } Actor;
 Actor actors[100];
 
@@ -21,7 +28,7 @@ void draw(Actor* actors)
         int x = actors[i].x;
         int y =actors[i].y;
         buffer[y][x].Char.AsciiChar = actors[i].shape;
-        buffer[y][x].Attributes = 15;//WHITE
+        buffer[y][x].Attributes = actors[i].color;
     }
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD sz = {80,24};
@@ -44,22 +51,67 @@ void keyboard(Actor* a)
     if(key == 'd')
         a->x++;
 }
-
-int main()
+void move_random(Actor* a)
 {
-    memset(actors,0,sizeof(Actor)*100);
+	int r = rand() % 10;
+	if(r == 0 )
+		a->x--;
+	if(r == 1 )
+		a->x++;
+	if(r == 2 )
+		a->y--;
+	if(r == 3 )
+		a->y++;
+}
+Actor new_hero(int x, int y)
+{
     Actor a;
-    a.x = 10;
-    a.y = 10;
+    memset(&a,0,sizeof(Actor));
+    a.x = x;
+    a.y = y;
     a.exist = 1;
     a.shape ='@';
+    a.color = 15;
+    return a;
+}
+Actor new_creeper(int x, int y)
+{
+	Actor a;
+	memset(&a,0,sizeof(Actor));
+	a.x = x;
+	a.y = y;
+	a.exist =1;
+	a.shape = '#';
+	a.tick_fn = move_random;
+	a.color = 11;
+	return a;
+}
+void tick(Actor* actors)
+{
+	int i;
+	for(i= 0;i<100;i++)
+	{
+		Actor * a = &(actors[i]);
+		if(a->exist == 0)
+			continue;
+		if(a->tick_fn == 0)
+			continue;
+		a->tick_fn(a);
+	}
 
-    actors[0] = a;
+}
+int main()
+{
+	srand(time(0));
+    memset(actors,0,sizeof(Actor)*100);
 
+    actors[0] = new_hero(10,10);
+	actors[1] = new_creeper(14,14);
     Actor * hero = &(actors[0]);
     while(1)
     {
         keyboard(hero);
+		tick(actors);
         draw(actors);
         Sleep(100);
     }
