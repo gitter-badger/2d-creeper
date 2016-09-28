@@ -62,6 +62,8 @@ void move_random(Actor* a)
 		a->y--;
 	if(r == 3 )
 		a->y++;
+	if(r == 4 )
+		a->color = 13;
 }
 Actor new_hero(int x, int y)
 {
@@ -102,11 +104,18 @@ void tick(Actor* actors)
 }
 int main()
 {
-	srand(time(0));
+    int creeper;
+    srand(time(0));
     memset(actors,0,sizeof(Actor)*100);
 
     actors[0] = new_hero(10,10);
-	actors[1] = new_creeper(14,14);
+    printf("크리퍼를 몇 마리 만드시겠습니까? : ");
+    scanf("%d", &creeper);
+    for (int i = 1; i != creeper; i++)
+    {
+        actors[i] = new_creeper(rand(), rand());
+    }
+
     Actor * hero = &(actors[0]);
     while(1)
     {
