@@ -15,7 +15,12 @@ typedef struct Actor
 } Actor;
 Actor actors[100];
 
-
+int boundary_ok(int x, int y)
+{
+	if(x<0||y<0 || x>=80||y>=24)
+		return 0;
+	return 1;
+}
 void draw(Actor* actors)
 {
     CHAR_INFO buffer[24][80];
@@ -27,6 +32,8 @@ void draw(Actor* actors)
             continue;
         int x = actors[i].x;
         int y =actors[i].y;
+		if(boundary_ok(x,y) ==0 )
+			continue;
         buffer[y][x].Char.AsciiChar = actors[i].shape;
         buffer[y][x].Attributes = actors[i].color;
     }
@@ -64,6 +71,8 @@ void move_random(Actor* a)
 		a->y++;
 	if(r == 4 )
 		a->color = 13;
+	else	
+		a->color = 11;
 }
 Actor new_hero(int x, int y)
 {
@@ -109,11 +118,11 @@ int main()
     memset(actors,0,sizeof(Actor)*100);
 
     actors[0] = new_hero(10,10);
-    printf("í¬ë¦¬í¼ë¥¼ ëª‡ ë§ˆë¦¬ ë§Œë“œì‹œê² ìŠµë‹ˆê¹Œ? : ");
+    printf("Å©¸®ÆÛ¸¦ ¸î ¸¶¸® ¸¸µå½Ã°Ú½À´Ï±î? : ");
     scanf("%d", &creeper);
-    for (int i = 1; i != creeper; i++)
+    for (int i = 0; i < creeper; i++)
     {
-        actors[i] = new_creeper(rand(), rand());
+        actors[i+1] = new_creeper(rand() % 80, rand()%24);
     }
 
     Actor * hero = &(actors[0]);
