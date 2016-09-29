@@ -1,8 +1,16 @@
 #include <Windows.h>
 #include <conio.h>
+#include <stdio.h>
 
 struct Actor;
 typedef void (*fptr)(struct Actor*);
+
+HANDLE COUT;
+HANDLE CIN;
+DWORD mode;
+WORD key;
+COORD pos = { 0, 0 };
+int event;
 
 typedef struct Actor
 {
@@ -15,6 +23,76 @@ typedef struct Actor
 } Actor;
 Actor actors[100];
 
+int be_input()
+{
+	INPUT_RECORD input_record;
+	DWORD input_count;
+
+	PeekConsoleInput(CIN, &input_record, 1, &input_count);
+	return input_count;
+}
+
+int get_input_2(WORD *vkey, COORD *pos)
+{
+	INPUT_RECORD input_record;
+	DWORD input_count;
+	ReadConsoleInput(CIN, &input_record, 1, &input_count);
+	switch (input_record.EventType)
+	{
+	case MOUSE_EVENT:
+		if (pos && (input_record.Event.MouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED))
+		{
+			CONSOLE_SCREEN_BUFFER_INFO csbi;
+			GetConsoleScreenBufferInfo(COUT, &csbi);
+			*pos = input_record.Event.MouseEvent.dwMousePosition;
+			pos->X -= csbi.srWindow.Left;
+			pos->Y -= csbi.srWindow.Top;
+			return MOUSE_EVENT;
+		}
+		break;
+	case KEY_EVENT:
+		if (vkey && (input_record.Event.KeyEvent.bKeyDown))
+		{
+			*vkey = input_record.Event.KeyEvent.wVirtualKeyCode;
+			return KEY_EVENT;
+		}
+	}
+	return;
+}
+
+void select_menu()
+{
+	Sleep(100);
+	printf("[    2d-creeper v1.0    ]\n");
+	Sleep(100);
+	printf("[                       ]\n");
+	Sleep(100);
+	printf("[ 1. Play Game          ]\n");
+	Sleep(100);
+	printf("[ 2. Shutdown Game      ]\n");
+	Sleep(100);
+	printf("[                       ]\n");
+	while (1)
+	{
+		CIN = GetStdHandle(STD_INPUT_HANDLE);
+		COUT = GetStdHandle(STD_OUTPUT_HANDLE);
+		GetConsoleMode(CIN, &mode);
+		SetConsoleMode(CIN, mode | ENABLE_MOUSE_INPUT);
+		if (be_input())
+		{
+			event = get_input_2(&key, &pos);
+		}
+		if ((pos.X > 0 && pos.X < 24) && pos.Y == 2)
+		{
+			return;
+		}
+		else if ((pos.X > 0 && pos.X < 24) && pos.Y == 3)
+		{
+			exit(0);
+		}
+	}
+	exit(0);
+}
 void set_cursor(int visibility)
 {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -183,6 +261,9 @@ int main()
     srand(time(0));
     memset(actors,0,sizeof(Actor)*100);
 	
+	select_menu();
+	system("cls");
+	
 	set_cursor(0);
 	
     actors[0] = new_hero(10,10);
@@ -197,7 +278,7 @@ int main()
     while(1)
     {
         keyboard(hero);
-		//tick(actors);
+		tick(actors);
         draw(actors);
         Sleep(100);
     }
