@@ -59,19 +59,63 @@ int get_input_2(WORD *vkey, COORD *pos)
 	}
 	return;
 }
+void display_buf(CHAR_INFO *buffer)
+{
+    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD sz = {80,24};
+    COORD xy = {0,0};
+    SMALL_RECT r = {0,0,80,24};
+    WriteConsoleOutput(h,buffer,sz,xy,&r);
+}
+void print_bg_color(CHAR_INFO* b,int x,int y,int color)
+{
+	int index = y*80+x;
+	if(index >= 80*24)
+		return;
+	//assure that color is 0~15
+	color %= 16;
+	b[index].Attributes = (WORD)(color <<4);
+}
+void print_buf_ch(CHAR_INFO* buf,char ch, int x, int y)
+{
+	int index = y*80+x;
+	if(index >= 80*24)
+		return;
+	buf[index].Char.AsciiChar = ch;
+}
+void print_buf(CHAR_INFO* buf,char* str,int x, int y)
+{
+	int len = strlen(str);
+	for(int i = 0;i<len;i++)
+	{
+		print_buf_ch(buf,str[i],x+i,y);
+	}
+	return;
+}
+void init_buf(CHAR_INFO* buf,char bg, char fg)
+{
+	char attr = (bg << 4) | fg;
+	for(int cy = 0;cy<24;cy++)
+	{
+		for(int cx =0; cx<80;cx++)
+		{
+			int index = cy*80+cx;
+			buf[index].Char.AsciiChar = ' ';
+			buf[index].Attributes = attr;
+		}
+	}
+}
 
 void select_menu()
 {
-	Sleep(100);
-	printf("[    2d-creeper v1.0    ]\n");
-	Sleep(100);
-	printf("[                       ]\n");
-	Sleep(100);
-	printf("[ 1. Play Game          ]\n");
-	Sleep(100);
-	printf("[ 2. Shutdown Game      ]\n");
-	Sleep(100);
-	printf("[                       ]\n");
+	CHAR_INFO buf[24][80];
+	init_buf((CHAR_INFO*)buf,0,15);
+	print_buf(buf,"[    2d-creeper v1.0    ]",0,0);
+	print_buf(buf,"[                       ]",0,1);
+	print_buf(buf,"[ 1. Play Game          ]",0,2);
+	print_buf(buf,"[ 2. Shutdown Game      ]",0,3);
+	print_buf(buf,"[                       ]",0,4);
+	display_buf((CHAR_INFO*)buf);
 	while (1)
 	{
 		CIN = GetStdHandle(STD_INPUT_HANDLE);
@@ -84,6 +128,13 @@ void select_menu()
 		}
 		if ((pos.X > 0 && pos.X < 24) && pos.Y == 2)
 		{
+			for(int x = 0;x<24;x++)
+			{
+				print_bg_color((CHAR_INFO*)buf,x,pos.Y,15);
+				display_buf((CHAR_INFO*)buf);
+				Sleep(20);
+			}
+			
 			return;
 		}
 		else if ((pos.X > 0 && pos.X < 24) && pos.Y == 3)
@@ -139,14 +190,7 @@ Actor* get_actor_at(Actor* actors,int x, int y)
 void draw(Actor* actors)
 {
     CHAR_INFO buffer[24][80];
-    for(int cy = 0; cy<24;cy++)
-	{
-		for(int cx = 0; cx<80;cx++)
-		{
-			buffer[cy][cx].Char.AsciiChar = ' ';
-			buffer[cy][cx].Attributes = (15-8) <<4;
-		}
-	}
+    init_buf(buffer,15-8,0);
 	
 	Actor* hero = &(actors[0]);
 	for(int cy = 0;cy<10;cy++)
@@ -170,12 +214,7 @@ void draw(Actor* actors)
 			}
 		}
 	}
-	
-    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD sz = {80,24};
-    COORD xy = {0,0};
-    SMALL_RECT r = {0,0,80,24};
-    WriteConsoleOutput(h,buffer,sz,xy,&r);
+	display_buf((CHAR_INFO*)buffer);
 }
 void move_relative(Actor * a, int x, int y)
 {
