@@ -43,6 +43,16 @@ void draw(Actor* actors)
     SMALL_RECT r = {0,0,80,24};
     WriteConsoleOutput(h,buffer,sz,xy,&r);
 }
+void move_relative(Actor * a, int x, int y)
+{
+	int to_x = a->x + x;
+	int to_y = a->y + y;
+	if(boundary_ok(to_x, to_y))
+	{
+		a->x = to_x; 
+		a->y = to_y;
+	}
+}
 
 void keyboard(Actor* a)
 {
@@ -50,25 +60,25 @@ void keyboard(Actor* a)
         return;
     int key = getch();
     if(key == 'w')
-        a->y--;
+        move_relative(0,-1);
     if(key == 's')
-        a->y++;
+        move_relative(0,1);
     if(key == 'a')
-        a->x--;
+        move_relative(-1,0);
     if(key == 'd')
-        a->x++;
+        move_relative(1,0);
 }
 void move_random(Actor* a)
 {
 	int r = rand() % 10;
 	if(r == 0 )
-		a->x--;
+		move_relative(-1,0);
 	if(r == 1 )
-		a->x++;
+		move_relative(1,0);
 	if(r == 2 )
-		a->y--;
+		move_relative(0,-1);
 	if(r == 3 )
-		a->y++;
+		move_relative(0,1);
 	if(r == 4 )
 		a->color = 13;
 	else	
