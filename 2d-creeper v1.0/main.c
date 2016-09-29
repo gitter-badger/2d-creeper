@@ -60,25 +60,25 @@ void keyboard(Actor* a)
         return;
     int key = getch();
     if(key == 'w')
-        move_relative(0,-1);
+        move_relative(a,0,-1);
     if(key == 's')
-        move_relative(0,1);
+        move_relative(a,0,1);
     if(key == 'a')
-        move_relative(-1,0);
+        move_relative(a,-1,0);
     if(key == 'd')
-        move_relative(1,0);
+        move_relative(a,1,0);
 }
 void move_random(Actor* a)
 {
 	int r = rand() % 10;
 	if(r == 0 )
-		move_relative(-1,0);
+		move_relative(a,-1,0);
 	if(r == 1 )
-		move_relative(1,0);
+		move_relative(a,1,0);
 	if(r == 2 )
-		move_relative(0,-1);
+		move_relative(a,0,-1);
 	if(r == 3 )
-		move_relative(0,1);
+		move_relative(a,0,1);
 	if(r == 4 )
 		a->color = 13;
 	else	
