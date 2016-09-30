@@ -14,6 +14,7 @@ extern void buf_modify_bg_color(CHAR_INFO *b, int x, int y, int color);
 extern void buf_put_ch(CHAR_INFO *buf, char ch, int x, int y);
 extern void buf_put(CHAR_INFO *buf, char *str, int x, int y);
 extern void buf_init(CHAR_INFO *buf, char bg, char fg);
+extern void buffer_draw_hp(CHAR_INFO *buf, Actor *a, int x, int y);
 extern void draw(Actor *actors);
 /* linux.c */
 /* main.c */

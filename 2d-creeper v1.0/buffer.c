@@ -75,7 +75,9 @@ void draw(Actor* actors)
 			Actor* a = get_actor_at(actors,sight_x,sight_y);
 			if(a == 0)
 			{
+				buffer_modify_bg_color(buffer, sight_x, sight_y, 15);
 				buffer[cy][cx].Char.AsciiChar = ' ';
+				buffer_modify_bg_color(buffer, sight_x, sight_y, 0);
 				buffer[cy][cx].Attributes = 0;
 			}
 			else

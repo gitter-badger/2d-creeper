@@ -1,10 +1,81 @@
-In file included from actor.c:1:0:
-header.h:42:19: fatal error: proto.h: No such file or directory
- #include "proto.h"
-                   ^
-compilation terminated.
-In file included from buffer.c:1:0:
-header.h:42:19: fatal error: proto.h: No such file or directory
- #include "proto.h"
-                   ^
-compilation terminated.
+buffer.c: In function 'buf_screen_cls':
+buffer.c:5:11: warning: passing argument 1 of 'buf_init' from incompatible pointer type
+  buf_init(b,0,15);
+           ^
+In file included from header.h:42:0,
+                 from buffer.c:1:
+proto.h:16:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ extern void buf_init(CHAR_INFO *buf, char bg, char fg);
+             ^
+buffer.c:6:14: warning: passing argument 1 of 'buf_display' from incompatible pointer type
+  buf_display(b);
+              ^
+In file included from header.h:42:0,
+                 from buffer.c:1:
+proto.h:35:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ extern void buf_display(CHAR_INFO *buffer);
+             ^
+buffer.c: In function 'draw':
+buffer.c:66:14: warning: passing argument 1 of 'buf_init' from incompatible pointer type
+     buf_init(buffer,15-8,0);
+              ^
+buffer.c:33:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ void buf_init(CHAR_INFO* buf,char bg, char fg)
+      ^
+buffer.c:78:5: warning: implicit declaration of function 'buffer_modify_bg_color' [-Wimplicit-function-declaration]
+     buffer_modify_bg_color(buffer, sight_x, sight_y, 15);
+     ^
+buffer.c:90:17: warning: passing argument 1 of 'buffer_draw_hp' from incompatible pointer type
+  buffer_draw_hp(buffer,hero,0,13);//display hero's hp at x ==0 y == 13
+                 ^
+buffer.c:46:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ void buffer_draw_hp(CHAR_INFO* buf,Actor* a, int x, int y)
+      ^
+win.c: In function 'get_input_2':
+win.c:55:2: warning: 'return' with no value, in function returning non-void
+  return;
+  ^
+win.c: In function 'select_menu':
+win.c:61:10: warning: passing argument 1 of 'buf_put' from incompatible pointer type
+  buf_put(buf,"[    2d-creeper v1.0    ]",0,0);
+          ^
+In file included from header.h:42:0,
+                 from win.c:1:
+proto.h:15:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ extern void buf_put(CHAR_INFO *buf, char *str, int x, int y);
+             ^
+win.c:62:10: warning: passing argument 1 of 'buf_put' from incompatible pointer type
+  buf_put(buf,"[                       ]",0,1);
+          ^
+In file included from header.h:42:0,
+                 from win.c:1:
+proto.h:15:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ extern void buf_put(CHAR_INFO *buf, char *str, int x, int y);
+             ^
+win.c:63:10: warning: passing argument 1 of 'buf_put' from incompatible pointer type
+  buf_put(buf,"[ 1. Play Game          ]",0,2);
+          ^
+In file included from header.h:42:0,
+                 from win.c:1:
+proto.h:15:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ extern void buf_put(CHAR_INFO *buf, char *str, int x, int y);
+             ^
+win.c:64:10: warning: passing argument 1 of 'buf_put' from incompatible pointer type
+  buf_put(buf,"[ 2. Shutdown Game      ]",0,3);
+          ^
+In file included from header.h:42:0,
+                 from win.c:1:
+proto.h:15:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ extern void buf_put(CHAR_INFO *buf, char *str, int x, int y);
+             ^
+win.c:65:10: warning: passing argument 1 of 'buf_put' from incompatible pointer type
+  buf_put(buf,"[                       ]",0,4);
+          ^
+In file included from header.h:42:0,
+                 from win.c:1:
+proto.h:15:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ extern void buf_put(CHAR_INFO *buf, char *str, int x, int y);
+             ^
+C:\Users\user\AppData\Local\Temp\cckwGNVw.o:buffer.c:(.text+0x35c): undefined reference to `buffer_modify_bg_color'
+C:\Users\user\AppData\Local\Temp\cckwGNVw.o:buffer.c:(.text+0x39a): undefined reference to `buffer_modify_bg_color'
+collect2.exe: error: ld returned 1 exit status
