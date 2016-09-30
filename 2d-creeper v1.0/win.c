@@ -1,3 +1,4 @@
+#include "header.h"
 #ifndef LINUX
 HANDLE COUT;
 HANDLE CIN;
@@ -56,12 +57,12 @@ int get_input_2(WORD *vkey, COORD *pos)
 void select_menu()
 {
 	CHAR_INFO buf[24][80];
-	init_buf((CHAR_INFO*)buf,0,15);
-	print_buf(buf,"[    2d-creeper v1.0    ]",0,0);
-	print_buf(buf,"[                       ]",0,1);
-	print_buf(buf,"[ 1. Play Game          ]",0,2);
-	print_buf(buf,"[ 2. Shutdown Game      ]",0,3);
-	print_buf(buf,"[                       ]",0,4);
+	buf_init((CHAR_INFO*)buf,0,15);
+	buf_put(buf,"[    2d-creeper v1.0    ]",0,0);
+	buf_put(buf,"[                       ]",0,1);
+	buf_put(buf,"[ 1. Play Game          ]",0,2);
+	buf_put(buf,"[ 2. Shutdown Game      ]",0,3);
+	buf_put(buf,"[                       ]",0,4);
 	buf_display((CHAR_INFO*)buf);
 	while (1)
 	{
