@@ -43,7 +43,23 @@ void buf_init(CHAR_INFO* buf,char bg, char fg)
 		}
 	}
 }
-
+void buffer_draw_hp(CHAR_INFO* buf,Actor* a, int x, int y)
+{
+	int max = a->max_hp;
+	int hp = a->hp;
+	int percent = ((double)hp/(double)max)* 100.0;
+	int gauge = percent / 10;//because hp will be represented with 10 cell gauge bar
+	int i;
+	buf_put(buf,"HP:",x,y);
+	for(i =0;i<gauge;i++)
+	{
+		buf_modify_bg_color(buf,x+i,y+1,4+8);//4+8 bright red 
+	}
+	for(;i<10;i++)	
+	{
+		buf_modify_bg_color(buf,x+i,y+1,4);//4 dark red color (maybe)
+	}
+}
 void draw(Actor* actors)
 {
     CHAR_INFO buffer[24][80];
@@ -54,8 +70,6 @@ void draw(Actor* actors)
 	{
 		for(int cx = 0;cx<20;cx++)
 		{
-			//sight_x¿Í y´Â hero¸¦ °¡Àå ¿ÞÂÊ À§·Î ÇØ¼­ 10x20ÀÌ ¾Æ´Ï¶ó
-			//heroÀÇ -10¿ÞÂÊ -5À§ ÂÊÀ» »ç°¢ÇüÀÇ ¿ÞÁ· À§·Î ÇØ¼­ 10x20
 			int sight_x = hero->x +cx -10;
 			int sight_y = hero->y +cy -5;
 			Actor* a = get_actor_at(actors,sight_x,sight_y);
@@ -71,5 +85,7 @@ void draw(Actor* actors)
 			}
 		}
 	}
+	buffer_draw_hp(buffer,hero,0,13);//display hero's hp at x ==0 y == 13
+	
 	buf_display((CHAR_INFO*)buffer);
 }

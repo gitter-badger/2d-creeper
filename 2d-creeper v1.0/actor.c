@@ -39,6 +39,8 @@ void keyboard(Actor* a)
         move_relative(a,-1,0);
     if(key == 'd')
         move_relative(a,1,0);
+	if(key == 'q')
+		a->hp -= 10;
 }
 void tick(Actor* actors)
 {
@@ -90,6 +92,8 @@ Actor new_hero(int x, int y)
     a.exist = 1;
     a.shape ='@';
     a.color = 15;
+	a.max_hp = 300;
+	a.hp = 300;
     return a;
 }
 Actor new_creeper(int x, int y)
@@ -102,5 +106,7 @@ Actor new_creeper(int x, int y)
 	a.shape = '#';
 	a.tick_fn = move_random;
 	a.color = 11;
+	a.max_hp = 300;
+	a.hp = 300;
 	return a;
 }

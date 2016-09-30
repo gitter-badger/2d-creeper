@@ -31,6 +31,8 @@ typedef struct Actor
 	int exist;
 	fptr tick_fn;
 	char color;
+	int hp;
+	int max_hp;
 
 } Actor;
 Actor actors[100];
