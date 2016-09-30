@@ -1,0 +1,10 @@
+In file included from actor.c:1:0:
+header.h:42:19: fatal error: proto.h: No such file or directory
+ #include "proto.h"
+                   ^
+compilation terminated.
+In file included from buffer.c:1:0:
+header.h:42:19: fatal error: proto.h: No such file or directory
+ #include "proto.h"
+                   ^
+compilation terminated.
