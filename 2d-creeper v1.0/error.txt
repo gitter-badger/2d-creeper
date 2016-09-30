@@ -22,9 +22,18 @@ buffer.c:66:14: warning: passing argument 1 of 'buf_init' from incompatible poin
 buffer.c:33:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  void buf_init(CHAR_INFO* buf,char bg, char fg)
       ^
-buffer.c:78:5: warning: implicit declaration of function 'buffer_modify_bg_color' [-Wimplicit-function-declaration]
-     buffer_modify_bg_color(buffer, sight_x, sight_y, 15);
-     ^
+buffer.c:78:25: warning: passing argument 1 of 'buf_modify_bg_color' from incompatible pointer type
+     buf_modify_bg_color(buffer, sight_x, sight_y, 15);
+                         ^
+buffer.c:8:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ void buf_modify_bg_color(CHAR_INFO* b,int x,int y,int color)
+      ^
+buffer.c:80:25: warning: passing argument 1 of 'buf_modify_bg_color' from incompatible pointer type
+     buf_modify_bg_color(buffer, sight_x, sight_y, 0);
+                         ^
+buffer.c:8:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ void buf_modify_bg_color(CHAR_INFO* b,int x,int y,int color)
+      ^
 buffer.c:90:17: warning: passing argument 1 of 'buffer_draw_hp' from incompatible pointer type
   buffer_draw_hp(buffer,hero,0,13);//display hero's hp at x ==0 y == 13
                  ^
@@ -76,6 +85,3 @@ In file included from header.h:42:0,
 proto.h:15:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  extern void buf_put(CHAR_INFO *buf, char *str, int x, int y);
              ^
-C:\Users\user\AppData\Local\Temp\cckwGNVw.o:buffer.c:(.text+0x35c): undefined reference to `buffer_modify_bg_color'
-C:\Users\user\AppData\Local\Temp\cckwGNVw.o:buffer.c:(.text+0x39a): undefined reference to `buffer_modify_bg_color'
-collect2.exe: error: ld returned 1 exit status
