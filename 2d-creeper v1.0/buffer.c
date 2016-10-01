@@ -12,7 +12,22 @@ void buf_modify_bg_color(CHAR_INFO* b,int x,int y,int color)
 		return;
 	//assure that color is 0~15
 	color %= 16;
-	b[index].Attributes = (WORD)(color <<4);
+	WORD attr = b[index].Attributes;
+	attr = attr & 0x000f;
+	attr = attr | (WORD)(color <<4);
+	b[index].Attributes = attr;
+}
+void buf_modify_fg_color(CHAR_INFO* b,int x,int y,int color)
+{
+	int index = y*80+x;
+	if(index >= 80*24)
+		return;
+	//assure that color is 0~15
+	color %= 16;
+	WORD attr = b[index].Attributes;
+	attr = attr & 0xfff0;
+	attr = attr | (WORD)(color);
+	b[index].Attributes = attr;
 }
 void buf_put_ch(CHAR_INFO* buf,char ch, int x, int y)
 {
@@ -21,12 +36,27 @@ void buf_put_ch(CHAR_INFO* buf,char ch, int x, int y)
 		return;
 	buf[index].Char.AsciiChar = ch;
 }
+void buf_put_ch_with_color(CHAR_INFO* buf, int x, int y, char ch,char bg_color,char fg_color)
+{
+	buf_put_ch(buf,ch,x,y);
+	buf_modify_bg_color(buf,x,y,bg_color);
+	buf_modify_fg_color(buf,x,y,fg_color);
+}
 void buf_put(CHAR_INFO* buf,char* str,int x, int y)
 {
 	int len = strlen(str);
 	for(int i = 0;i<len;i++)
 	{
 		buf_put_ch(buf,str[i],x+i,y);
+	}
+	return;
+}
+void buf_put_with_color(CHAR_INFO* buf,int x, int y,char* str,char bg, char fg)
+{
+	int len = strlen(str);
+	for(int i = 0;i<len;i++)
+	{
+		buf_put_ch_with_color(buf,x+i,y,str[i],bg,fg);
 	}
 	return;
 }
@@ -50,7 +80,7 @@ void buffer_draw_hp(CHAR_INFO* buf,Actor* a, int x, int y)
 	int percent = ((double)hp/(double)max)* 100.0;
 	int gauge = percent / 10;//because hp will be represented with 10 cell gauge bar
 	int i;
-	buf_put(buf,"HP:",x,y);
+	buf_put_with_color(buf,x,y,"HP:",0,4+8);
 	for(i =0;i<gauge;i++)
 	{
 		buf_modify_bg_color(buf,x+i,y+1,4+8);//4+8 bright red 
@@ -60,12 +90,27 @@ void buffer_draw_hp(CHAR_INFO* buf,Actor* a, int x, int y)
 		buf_modify_bg_color(buf,x+i,y+1,4);//4 dark red color (maybe)
 	}
 }
+void buffer_draw_frame(CHAR_INFO* buf,int x, int y, int width, int height, char color)
+{
+	for(int cy = 0;cy<height;cy++)
+	{
+		for(int cx = 0; cx<width;cx++)
+		{
+			buf_modify_bg_color(buf,cx+x,cy+y,color);
+		}
+	}
+}
 void draw(Actor* actors)
 {
     CHAR_INFO buffer[24][80];
-    buf_init(buffer,15-8,0);
+    buf_init(buffer,0,0);
 	
 	Actor* hero = &(actors[0]);
+	
+	//parameters: buffer,x,y,width,height,color
+	buffer_draw_frame(buffer,0,0,22,12,15);
+	buffer_draw_frame(buffer,0,0,22,12,15);
+	
 	for(int cy = 0;cy<10;cy++)
 	{
 		for(int cx = 0;cx<20;cx++)
@@ -75,15 +120,14 @@ void draw(Actor* actors)
 			Actor* a = get_actor_at(actors,sight_x,sight_y);
 			if(a == 0)
 			{
-				buf_modify_bg_color(buffer, sight_x, sight_y, 15);
-				buffer[cy][cx].Char.AsciiChar = ' ';
-				buf_modify_bg_color(buffer, sight_x, sight_y, 0);
-				buffer[cy][cx].Attributes = 0;
+				buf_put_ch_with_color(buffer,cx+1,cy+1,' ',0,0);
 			}
 			else
-			{				
-				buffer[cy][cx].Char.AsciiChar = a->shape;
-				buffer[cy][cx].Attributes = a->color;
+			{	
+				char ch = a->shape;
+				char fg = a->color;
+				//+1 for frame
+				buf_put_ch_with_color(buffer,cx+1,cy+1,ch,0,fg);
 			}
 		}
 	}
