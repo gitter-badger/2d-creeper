@@ -92,15 +92,21 @@ void game()
     Actor * hero = &(actors[0]);
     while(1)
     {
-		//100ms에 한번씩 그리기
-		if(wait(100) == 0)
-		{
+		
+			Sleep(50);
 			draw(actors);
 			tick(actors);
-			keyboard(hero);
+			if(kbhit())
+			{
+				keyboard(hero);
+				while(kbhit()) getch();
+			}
 			if(check_game_over(hero))
 				break;
-		}
+
+
+				
+
     }
     return;
 }

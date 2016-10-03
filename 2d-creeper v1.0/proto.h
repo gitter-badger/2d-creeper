@@ -25,6 +25,14 @@ extern void buffer_draw_hp(CHAR_INFO *buf, Actor *a, int x, int y);
 extern void buffer_draw_frame(CHAR_INFO *buf, int x, int y, int width, int height, char color);
 extern void draw(Actor *actors);
 /* linux.c */
+extern void gotoxy(int x, int y);
+extern int kbhit_linux(void);
+extern int getch_linux(void);
+extern void set_cursor_linux(int v);
+extern void set_color_linux(char bg, char fg);
+extern void buf_display_linux(CHAR_INFO *buffer);
+extern void Sleep_linux(int v);
+extern void select_menu_linux(void);
 /* main.c */
 extern int boundary_ok(int x, int y);
 extern int wait(int ms);
@@ -33,10 +41,3 @@ extern void print_slow(char *str, int delay);
 extern int main(void);
 extern void game(void);
 /* win.c */
-extern void gotoxy(int x, int y);
-extern void set_cursor(int visibility);
-extern int be_input(void);
-extern int get_input_2(WORD *vkey, COORD *pos);
-extern void set_color(char bg, char fg);
-extern void select_menu(void);
-extern void buf_display(CHAR_INFO *buffer);

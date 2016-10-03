@@ -2,6 +2,10 @@
 #include "header.h"
 #include <termios.h>
 #include <sys/ioctl.h>
+void gotoxy(int x, int y)
+{
+	printf("%c[%d;%dH",0x1b,x,y);
+}
 int kbhit_linux()
 {
 	
@@ -31,7 +35,7 @@ void set_cursor_linux(int v)
 {
 	//do 
 }
-void set_color(char bg, char fg)
+void set_color_linux(char bg, char fg)
 {
 	char bg_str[10];
 	char fg_str[10];

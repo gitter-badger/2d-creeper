@@ -12,6 +12,7 @@
 #define set_cursor(x) set_cursor_linux(x)
 #define kbhit() kbhit_linux()
 #define getch() getch_linux()
+#define set_color(x,y) set_color_linux(x,y)
 #endif
 
 

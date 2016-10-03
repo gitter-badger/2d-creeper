@@ -88,6 +88,9 @@ void buffer_draw_hp(CHAR_INFO* buf,Actor* a, int x, int y)
 	{
 		buf_modify_bg_color(buf,x+i,y+1,4+8);//4+8 bright red 
 	}
+#ifdef LINUX
+	return;
+#endif
 	for(;i<10;i++)	
 	{
 		buf_modify_bg_color(buf,x+i,y+1,4);//4 dark red color (maybe)
