@@ -69,6 +69,9 @@ void move_relative(Actor * a, int x, int y)
 }
 void creeper_branch(Actor* a)
 {
+	CHAR_INFO buffer[24][80];
+    buf_init(buffer,0,0);
+	Actor* hero = &(actors[0]);
 	//포인터 이므로 .대신 -> 만약 포인터앞에 *를 붙여서 구조체로 바꾸면 .를 써도됨
 	//예: function((*a).x, (*a).y)
 	int check = check_player_near(a->x, a->y);
@@ -76,6 +79,8 @@ void creeper_branch(Actor* a)
 	{
 		//각각의 크리퍼정보가 a안에 들어있음 
 		a->tick_fn=creeper_blink;
+		Boom(&a);
+		buffer_draw_hp(buffer,hero,0,13);
 	}
 	else
 	{
@@ -87,13 +92,28 @@ void creeper_branch(Actor* a)
 int check_player_near(int x, int y)
 {
 	//오타 떄문에 무한루프였음
-	for (int _y = y-2; _y <= y+2; _y++)
+	for (int _y = y-3; _y <= y+3; _y++)
 	{
-		for (int _x = x-2; _x <= x+2; _x++)
+		for (int _x = x-3; _x <= x+3; _x++)
 		{
 			if ((actors[0].x == _x) && (actors[0].y == _y))
 			{
 				return 1;
+			}
+		}
+	}
+	return 0;
+}
+void Boom(Actor *a)
+{
+	//오타 떄문에 무한루프였음
+	for (int _y = a->y-3; _y <= a->y+3; _y++)
+	{
+		for (int _x = a->x-3; _x <= a->x+3; _x++)
+		{
+			if ((actors[0].x == _x) && (actors[0].y == _y))
+			{
+				actors[0].hp -= 20;
 			}
 		}
 	}
@@ -104,8 +124,13 @@ void creeper_blink(Actor* a)
 	a->color = 13;
 	//a가 포인터이므로 . 대신 ->를 사용.
 	a->timer++;
-	if (a->timer >= 10)
+	char shape[30];
+	sprintf(shape,"%02d",a->timer);
+	//그냐 처음 1문자만 사용.
+	a->shape = shape[0];
+	if (a->timer >= 15)
 	{
+		Boom(a);
 		a->exist = 0;
 	}
 	//틱한번에 250ms를 쉬는게 아니므로 지우기. 쉬는것은 메인함수안의 wait에서 담당.
@@ -134,8 +159,8 @@ Actor new_hero(int x, int y)
     a.exist = 1;
     a.shape ='@';
     a.color = 15;
-	a.max_hp = 300;
-	a.hp = 300;
+	a.max_hp = 150;
+	a.hp = 150;
     return a;
 }
 Actor new_creeper(int x, int y)

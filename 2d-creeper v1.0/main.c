@@ -1,4 +1,11 @@
 #include "header.h"
+void gotoxy(int x,int y)
+{
+     COORD Cur;
+     Cur.X=x;
+     Cur.Y=y;
+     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),Cur);
+}
 int boundary_ok(int x, int y)
 {
 	if(x<0||y<0 || x>=80||y>=24)
@@ -17,6 +24,24 @@ int wait(int ms)
 		return 1;
 	old = clock();
 	return 0;
+}
+void game_over()
+{
+	char a;
+	gotoxy(10, 10);
+	printf("Game Over...");
+	printf("Restart?(Y/N)");
+	//키입력 버퍼에 미리 들어가있던 키들이 들어가는거같음.
+	fflush(stdin);
+	scanf("%c", &a);
+	if ((a == 'y') || (a == 'Y'))
+	{
+		main();
+	}
+	else
+	{
+		exit(0);
+	}
 }
 int main()
 {
@@ -42,10 +67,17 @@ int main()
     Actor * hero = &(actors[0]);
     while(1)
     {
-        keyboard(hero);
-		draw(actors);
-		if(wait(50) == 0)
+		//100ms에 한번씩 그리기
+		if(wait(100) == 0)
+		{
+			draw(actors);
 			tick(actors);
+			keyboard(hero);
+		}
+		if (actors[0].hp <=0)
+		{
+			game_over();
+		}
     }
 
     return 0;

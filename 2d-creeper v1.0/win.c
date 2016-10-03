@@ -66,6 +66,8 @@ void select_menu()
 	buf_display((CHAR_INFO*)buf);
 	while (1)
 	{
+		pos.X = 0;
+		pos.Y = 0;
 		CIN = GetStdHandle(STD_INPUT_HANDLE);
 		COUT = GetStdHandle(STD_OUTPUT_HANDLE);
 		GetConsoleMode(CIN, &mode);

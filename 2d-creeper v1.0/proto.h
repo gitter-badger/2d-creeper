@@ -7,6 +7,7 @@ extern void tick(Actor *actors);
 extern void move_relative(Actor *a, int x, int y);
 extern void creeper_branch(Actor *a);
 extern int check_player_near(int x, int y);
+extern void Boom(Actor *a);
 extern void creeper_blink(Actor *a);
 extern void move_random(Actor *a);
 extern Actor new_hero(int x, int y);
@@ -25,8 +26,10 @@ extern void buffer_draw_frame(CHAR_INFO *buf, int x, int y, int width, int heigh
 extern void draw(Actor *actors);
 /* linux.c */
 /* main.c */
+extern void gotoxy(int x, int y);
 extern int boundary_ok(int x, int y);
 extern int wait(int ms);
+extern void game_over(void);
 extern int main(void);
 /* win.c */
 extern HANDLE COUT;

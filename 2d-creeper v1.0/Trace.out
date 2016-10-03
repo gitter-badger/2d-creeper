@@ -1,7 +1,7 @@
 ** allocator metrics:
-.. allocs:                      473198
-.. frees:                       473197
-...0) 7 bytes in alloc #1:00D51080
+.. allocs:                      473240
+.. frees:                       473239
+...0) 7 bytes in alloc #1:00721080
 .. total bytes allocated:            7
 .. current bytes allocated:          7
 .. maximum bytes allocated:     122340
