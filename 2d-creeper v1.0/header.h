@@ -33,7 +33,8 @@ typedef struct Actor
 	char color;
 	int hp;
 	int max_hp;
-
+	//초기화는 메인함수에서 memset으로 함.
+	int timer;
 } Actor;
 Actor actors[100];
 

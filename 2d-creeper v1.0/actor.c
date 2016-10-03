@@ -67,6 +67,50 @@ void move_relative(Actor * a, int x, int y)
 		a->y = to_y;
 	}
 }
+void creeper_branch(Actor* a)
+{
+	//포인터 이므로 .대신 -> 만약 포인터앞에 *를 붙여서 구조체로 바꾸면 .를 써도됨
+	//예: function((*a).x, (*a).y)
+	int check = check_player_near(a->x, a->y);
+	if (check == 1)
+	{
+		//각각의 크리퍼정보가 a안에 들어있음 
+		a->tick_fn=creeper_blink;
+	}
+	else
+	{
+		move_random(a);
+	}
+	return;
+}
+//여기서 무한루프가 생김 
+int check_player_near(int x, int y)
+{
+	//오타 떄문에 무한루프였음
+	for (int _y = y-2; _y <= y+2; _y++)
+	{
+		for (int _x = x-2; _x <= x+2; _x++)
+		{
+			if ((actors[0].x == _x) && (actors[0].y == _y))
+			{
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+void creeper_blink(Actor* a)
+{
+	a->color = 13;
+	//a가 포인터이므로 . 대신 ->를 사용.
+	a->timer++;
+	if (a->timer >= 10)
+	{
+		a->exist = 0;
+	}
+	//틱한번에 250ms를 쉬는게 아니므로 지우기. 쉬는것은 메인함수안의 wait에서 담당.
+	//Sleep(250);
+}
 void move_random(Actor* a)
 {
 	int r = rand() % 10;
@@ -78,8 +122,6 @@ void move_random(Actor* a)
 		move_relative(a,0,-1);
 	if(r == 3 )
 		move_relative(a,0,1);
-	if(r == 4 )
-		a->color = 13;
 	else	
 		a->color = 11;
 }
@@ -104,7 +146,7 @@ Actor new_creeper(int x, int y)
 	a.y = y;
 	a.exist =1;
 	a.shape = '#';
-	a.tick_fn = move_random;
+	a.tick_fn = creeper_branch;
 	a.color = 11;
 	a.max_hp = 300;
 	a.hp = 300;

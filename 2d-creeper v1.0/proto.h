@@ -5,16 +5,23 @@ extern Actor *get_actor_at(Actor *actors, int x, int y);
 extern void keyboard(Actor *a);
 extern void tick(Actor *actors);
 extern void move_relative(Actor *a, int x, int y);
+extern void creeper_branch(Actor *a);
+extern int check_player_near(int x, int y);
+extern void creeper_blink(Actor *a);
 extern void move_random(Actor *a);
 extern Actor new_hero(int x, int y);
 extern Actor new_creeper(int x, int y);
 /* buffer.c */
 extern void buf_screen_cls(void);
 extern void buf_modify_bg_color(CHAR_INFO *b, int x, int y, int color);
+extern void buf_modify_fg_color(CHAR_INFO *b, int x, int y, int color);
 extern void buf_put_ch(CHAR_INFO *buf, char ch, int x, int y);
+extern void buf_put_ch_with_color(CHAR_INFO *buf, int x, int y, char ch, char bg_color, char fg_color);
 extern void buf_put(CHAR_INFO *buf, char *str, int x, int y);
+extern void buf_put_with_color(CHAR_INFO *buf, int x, int y, char *str, char bg, char fg);
 extern void buf_init(CHAR_INFO *buf, char bg, char fg);
 extern void buffer_draw_hp(CHAR_INFO *buf, Actor *a, int x, int y);
+extern void buffer_draw_frame(CHAR_INFO *buf, int x, int y, int width, int height, char color);
 extern void draw(Actor *actors);
 /* linux.c */
 /* main.c */

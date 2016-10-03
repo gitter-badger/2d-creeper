@@ -109,7 +109,6 @@ void draw(Actor* actors)
 	
 	//parameters: buffer,x,y,width,height,color
 	buffer_draw_frame(buffer,0,0,22,12,15);
-	buffer_draw_frame(buffer,0,0,22,12,15);
 	
 	for(int cy = 0;cy<10;cy++)
 	{
@@ -118,12 +117,17 @@ void draw(Actor* actors)
 			int sight_x = hero->x +cx -10;
 			int sight_y = hero->y +cy -5;
 			Actor* a = get_actor_at(actors,sight_x,sight_y);
+			//방금a가 0일때 a->exist를 참조할수없어서 에러남.
 			if(a == 0)
 			{
 				buf_put_ch_with_color(buffer,cx+1,cy+1,' ',0,0);
 			}
+			else if(a->exist == 0)
+			{
+				buf_put_ch_with_color(buffer,cx+1,cy+1,' ',0,0);
+			}
 			else
-			{	
+			{
 				char ch = a->shape;
 				char fg = a->color;
 				//+1 for frame

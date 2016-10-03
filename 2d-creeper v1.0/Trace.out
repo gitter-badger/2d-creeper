@@ -1,10 +1,10 @@
 ** allocator metrics:
-.. allocs:                      473012
-.. frees:                       473011
-...0) 7 bytes in alloc #1:007D1080
+.. allocs:                      473198
+.. frees:                       473197
+...0) 7 bytes in alloc #1:00D51080
 .. total bytes allocated:            7
 .. current bytes allocated:          7
-.. maximum bytes allocated:     122121
+.. maximum bytes allocated:     122340
 .. segment-table length:             1
 .. current # of segments:            1
-.. maximum # of segments:         6367
+.. maximum # of segments:         6375

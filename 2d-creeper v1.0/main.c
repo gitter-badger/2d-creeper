@@ -35,6 +35,7 @@ int main()
     scanf("%d", &creeper);
     for (int i = 0; i < creeper; i++)
     {
+		//크리퍼를 만들때 초기 tick_fn을 creeper_branch로 해줘야함
         actors[i+1] = new_creeper(rand() % 80, rand()%24);
     }
 
@@ -42,9 +43,9 @@ int main()
     while(1)
     {
         keyboard(hero);
-	draw(actors);
-	if(wait(500) == 0)
-		tick(actors);
+		draw(actors);
+		if(wait(50) == 0)
+			tick(actors);
     }
 
     return 0;
