@@ -49,7 +49,7 @@ int main()
 		set_color(0,15);
 		printf("게임을 다시 시작할까요?Y/N");
 		char answer;
-		fflush(stdin);
+		while(kbhit()) getch();
 		scanf("%c",&answer);
 		if(answer == 'y' || answer == 'Y')
 			continue;
