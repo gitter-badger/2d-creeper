@@ -68,8 +68,8 @@ void game()
 	srand(time(0));
 	memset(actors,0,sizeof(Actor)*100);
 	
+	
 	select_menu();
-
 	buf_screen_cls();
 
 	set_cursor(0);

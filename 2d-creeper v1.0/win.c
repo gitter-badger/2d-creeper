@@ -78,18 +78,36 @@ void select_menu()
 	buf_put(buf,"[ 1. Play Game          ]",0,2);
 	buf_put(buf,"[ 2. Shutdown Game      ]",0,3);
 	buf_display((CHAR_INFO*)buf);
+	
+
+	COORD pos = { 0, 0 };
+
+	DWORD mode;
+	WORD key;
+	int event;
+	HANDLE CIN = GetStdHandle(STD_INPUT_HANDLE);
+	HANDLE COUT = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleMode(CIN, &mode);
+	SetConsoleMode(CIN, mode | ENABLE_MOUSE_INPUT);
+	
 	while (1)
 	{
-		
-		COORD pos = { 0, 0 };
-
-		DWORD mode;
-		WORD key;
-		int event;
-		HANDLE CIN = GetStdHandle(STD_INPUT_HANDLE);
-		HANDLE COUT = GetStdHandle(STD_OUTPUT_HANDLE);
-		GetConsoleMode(CIN, &mode);
-		SetConsoleMode(CIN, mode | ENABLE_MOUSE_INPUT);
+		if(kbhit())
+		{
+			int k = getch();
+			if(k == '1')
+			{
+				for(int x = 0;x<24;x++)
+				{
+					buf_modify_bg_color((CHAR_INFO*)buf,x,pos.Y,15);
+					buf_display((CHAR_INFO*)buf);
+					Sleep(20);
+					return;
+				}
+			}
+			if(k == '2')
+				exit(0);
+		}
 		if (be_input())
 		{
 			event = get_input_2(&key, &pos);
