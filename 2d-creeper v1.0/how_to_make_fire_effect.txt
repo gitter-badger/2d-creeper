@@ -1,0 +1,12 @@
+#1. make function called "new_fire"
+#2. new_fire is same as new_creeper, except that it has red color and '$' shape.
+#3. the fire has tick_fn that increase its own timer by 1 for every tick
+#4. the fire's tick_fn damage hero if hero has same xy as fire
+#5. in fire's tick_fn, change fire's exist to 0 when timer >= 20
+#6. in the Boom function, do not decrease hero's hp.
+#7. in the Boom function, make new fire at near creeper.
+
+So, when a creeper Boom, Boom will create fire 3x3(or 5x5 whatever.)
+the fire will be visible to user for 20 tick.
+the fire will damage hero if the fire overlap with hero.
+
