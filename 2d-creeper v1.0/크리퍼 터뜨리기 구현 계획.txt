@@ -1,0 +1,12 @@
+[완료]#1. creeper_branch라는 move_rand과 프로토 타입이 같은 함수를 만든다.
+[완료]#2. creeper_branch 함수안에서 주인공이 근처에 있는지 체크하는 함수 check_player_near를 호출한다.
+[완료]#3. check_player_near는 플레이어가 근처에있으면 1을 반환하고 아니면 0을 반환한다.
+[완료]#4. check_player_near가 1인경우 tick_fn을 creeper_branch에서 creeper_blink로 바꾼다. 0인경우 랜덤이동
+[완료]#5. creeper_blink역시 move_rand와 같은 프로토타입을 가지고있어서 tick_fn에 넣을 수 있다.
+[완료]#6. actor 구조체에 timer변수를 추가한다
+[완료]#7. creeper_blink함수 안에서는 크리퍼를 빨간색으로 바꾸고 크리퍼 구조체(actor구조체) 안의 timer를 1증가시킨다.
+[완료]#8. creeper_blink함수 안에서 timer가 10이면 크리퍼의 exist변수를 0으로 한다. timer가 10이하면 그대로 둔다.
+
+여기까지 작성하면 크리퍼는 랜덤으로 움직이다가 주변에 플레이어가 있을때 깜빡이는 상태로 들어간다.
+깜빡이는 상태의 크리퍼는 10번의 틱을 거친 후 없어진다.
+
