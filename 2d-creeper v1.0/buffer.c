@@ -80,7 +80,10 @@ void buffer_draw_hp(CHAR_INFO* buf,Actor* a, int x, int y)
 	int percent = ((double)hp/(double)max)* 100.0;
 	int gauge = percent / 10;//because hp will be represented with 10 cell gauge bar
 	int i;
-	buf_put_with_color(buf,x,y,"HP:",0,4+8);
+	char hp_str[100];
+	sprintf(hp_str,"HP:%d/%d",hp,max);
+	buf_put_with_color(buf,x,y,hp_str,0,4+8);
+	
 	for(i =0;i<gauge;i++)
 	{
 		buf_modify_bg_color(buf,x+i,y+1,4+8);//4+8 bright red 

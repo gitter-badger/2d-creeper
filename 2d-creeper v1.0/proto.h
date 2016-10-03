@@ -26,20 +26,17 @@ extern void buffer_draw_frame(CHAR_INFO *buf, int x, int y, int width, int heigh
 extern void draw(Actor *actors);
 /* linux.c */
 /* main.c */
-extern void gotoxy(int x, int y);
 extern int boundary_ok(int x, int y);
 extern int wait(int ms);
-extern void game_over(void);
+extern int check_game_over(Actor *a);
+extern void print_slow(char *str, int delay);
 extern int main(void);
+extern void game(void);
 /* win.c */
-extern HANDLE COUT;
-extern HANDLE CIN;
-extern DWORD mode;
-extern WORD key;
-extern COORD pos;
-extern int event;
+extern void gotoxy(int x, int y);
 extern void set_cursor(int visibility);
 extern int be_input(void);
 extern int get_input_2(WORD *vkey, COORD *pos);
+extern void set_color(char bg, char fg);
 extern void select_menu(void);
 extern void buf_display(CHAR_INFO *buffer);

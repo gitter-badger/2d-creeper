@@ -1,11 +1,5 @@
 #include "header.h"
-void gotoxy(int x,int y)
-{
-     COORD Cur;
-     Cur.X=x;
-     Cur.Y=y;
-     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),Cur);
-}
+
 int boundary_ok(int x, int y)
 {
 	if(x<0||y<0 || x>=80||y>=24)
@@ -25,25 +19,50 @@ int wait(int ms)
 	old = clock();
 	return 0;
 }
-void game_over()
+int check_game_over(Actor* a)
 {
-	char a;
-	gotoxy(10, 10);
-	printf("Game Over...");
-	printf("Restart?(Y/N)");
-	//키입력 버퍼에 미리 들어가있던 키들이 들어가는거같음.
-	fflush(stdin);
-	scanf("%c", &a);
-	if ((a == 'y') || (a == 'Y'))
-	{
-		main();
-	}
+	if(a->hp <= 0)
+		return 1;
 	else
+		return 0;
+	
+}
+
+void print_slow(char* str,int delay)
+{
+	int i =0;
+	while(str[i] != 0)
 	{
-		exit(0);
+		putchar(str[i]);
+		Sleep(delay);
+		i++;
 	}
 }
+
 int main()
+{
+	while(1)
+	{
+		game();
+		buf_screen_cls();
+		gotoxy(0,0);
+		set_color(0,15);
+		printf("게임을 다시 시작할까요?Y/N");
+		char answer;
+		fflush(stdin);
+		scanf("%c",&answer);
+		if(answer == 'y' || answer == 'Y')
+			continue;
+		else
+			break;
+	}
+	
+	gotoxy(0,0);
+	set_color(0,15);
+	print_slow("플레이 해 주셔서 감사합니다.",100);
+	Sleep(1000);
+}
+void game()
 {
 	int creeper;
 	srand(time(0));
@@ -56,7 +75,13 @@ int main()
 	set_cursor(0);
 	
     actors[0] = new_hero(10,10);
-    printf("크리퍼를 몇 마리 만드시겠습니까? : ");
+	
+	
+	gotoxy(0,0);
+	set_color(0,12);
+	print_slow("크리퍼",100);
+	set_color(0,15);
+    printf("를 몇 마리 만드시겠습니까?(0~99)");
     scanf("%d", &creeper);
     for (int i = 0; i < creeper; i++)
     {
@@ -73,12 +98,9 @@ int main()
 			draw(actors);
 			tick(actors);
 			keyboard(hero);
-		}
-		if (actors[0].hp <=0)
-		{
-			game_over();
+			if(check_game_over(hero))
+				break;
 		}
     }
-
-    return 0;
+    return;
 }
