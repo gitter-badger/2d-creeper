@@ -73,6 +73,12 @@ void buf_init(CHAR_INFO* buf,char bg, char fg)
 		}
 	}
 }
+void buffer_draw_coord(CHAR_INFO* buf, Actor* a, int x, int y)
+{
+	char str[32];
+	sprintf(str,"x:%d, y:%d",a->x,a->y);
+	buf_put_with_color(buf,x,y,str,0,15);
+}
 void buffer_draw_hp(CHAR_INFO* buf,Actor* a, int x, int y)
 {
 	int max = a->max_hp;
@@ -80,7 +86,7 @@ void buffer_draw_hp(CHAR_INFO* buf,Actor* a, int x, int y)
 	int percent = ((double)hp/(double)max)* 100.0;
 	int gauge = percent / 10;//because hp will be represented with 10 cell gauge bar
 	int i;
-	char hp_str[100];
+	char hp_str[32];
 	sprintf(hp_str,"HP:%d/%d",hp,max);
 	buf_put_with_color(buf,x,y,hp_str,0,4+8);
 	
@@ -141,6 +147,7 @@ void draw(Actor* actors)
 			}
 		}
 	}
+	buffer_draw_coord(buffer,hero,0,12);
 	buffer_draw_hp(buffer,hero,0,13);//display hero's hp at x ==0 y == 13
 	
 	buf_display((CHAR_INFO*)buffer);

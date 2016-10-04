@@ -2,7 +2,7 @@ actor.c: In function 'creeper_branch':
 actor.c:73:14: warning: passing argument 1 of 'buf_init' from incompatible pointer type
      buf_init(buffer,0,0);
               ^
-In file included from header.h:43:0,
+In file included from header.h:44:0,
                  from actor.c:1:
 proto.h:23:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  extern void buf_init(CHAR_INFO *buf, char bg, char fg);
@@ -10,7 +10,7 @@ proto.h:23:13: note: expected 'struct CHAR_INFO *' but argument is of type 'stru
 actor.c:82:8: warning: passing argument 1 of 'Boom' from incompatible pointer type
    Boom(&a);
         ^
-In file included from header.h:43:0,
+In file included from header.h:44:0,
                  from actor.c:1:
 proto.h:10:13: note: expected 'struct Actor *' but argument is of type 'struct Actor **'
  extern void Boom(Actor *a);
@@ -18,9 +18,9 @@ proto.h:10:13: note: expected 'struct Actor *' but argument is of type 'struct A
 actor.c:83:18: warning: passing argument 1 of 'buffer_draw_hp' from incompatible pointer type
    buffer_draw_hp(buffer,hero,0,13);
                   ^
-In file included from header.h:43:0,
+In file included from header.h:44:0,
                  from actor.c:1:
-proto.h:24:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+proto.h:25:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  extern void buffer_draw_hp(CHAR_INFO *buf, Actor *a, int x, int y);
              ^
 actor.c: In function 'Boom':
@@ -31,7 +31,7 @@ buffer.c: In function 'buf_screen_cls':
 buffer.c:5:11: warning: passing argument 1 of 'buf_init' from incompatible pointer type
   buf_init(b,0,15);
            ^
-In file included from header.h:43:0,
+In file included from header.h:44:0,
                  from buffer.c:1:
 proto.h:23:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  extern void buf_init(CHAR_INFO *buf, char bg, char fg);
@@ -39,46 +39,52 @@ proto.h:23:13: note: expected 'struct CHAR_INFO *' but argument is of type 'stru
 buffer.c:6:14: warning: passing argument 1 of 'buf_display' from incompatible pointer type
   buf_display(b);
               ^
-In file included from header.h:43:0,
+In file included from header.h:44:0,
                  from buffer.c:1:
-proto.h:42:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+proto.h:43:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  extern void buf_display(CHAR_INFO *buffer);
              ^
 buffer.c: In function 'draw':
-buffer.c:109:14: warning: passing argument 1 of 'buf_init' from incompatible pointer type
+buffer.c:118:14: warning: passing argument 1 of 'buf_init' from incompatible pointer type
      buf_init(buffer,0,0);
               ^
 buffer.c:63:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  void buf_init(CHAR_INFO* buf,char bg, char fg)
       ^
-buffer.c:114:20: warning: passing argument 1 of 'buffer_draw_frame' from incompatible pointer type
+buffer.c:123:20: warning: passing argument 1 of 'buffer_draw_frame' from incompatible pointer type
   buffer_draw_frame(buffer,0,0,22,12,15);
                     ^
-buffer.c:96:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+buffer.c:105:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  void buffer_draw_frame(CHAR_INFO* buf,int x, int y, int width, int height, char color)
       ^
-buffer.c:126:27: warning: passing argument 1 of 'buf_put_ch_with_color' from incompatible pointer type
+buffer.c:135:27: warning: passing argument 1 of 'buf_put_ch_with_color' from incompatible pointer type
      buf_put_ch_with_color(buffer,cx+1,cy+1,' ',0,0);
                            ^
 buffer.c:39:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  void buf_put_ch_with_color(CHAR_INFO* buf, int x, int y, char ch,char bg_color,char fg_color)
       ^
-buffer.c:130:27: warning: passing argument 1 of 'buf_put_ch_with_color' from incompatible pointer type
+buffer.c:139:27: warning: passing argument 1 of 'buf_put_ch_with_color' from incompatible pointer type
      buf_put_ch_with_color(buffer,cx+1,cy+1,' ',0,0);
                            ^
 buffer.c:39:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  void buf_put_ch_with_color(CHAR_INFO* buf, int x, int y, char ch,char bg_color,char fg_color)
       ^
-buffer.c:137:27: warning: passing argument 1 of 'buf_put_ch_with_color' from incompatible pointer type
+buffer.c:146:27: warning: passing argument 1 of 'buf_put_ch_with_color' from incompatible pointer type
      buf_put_ch_with_color(buffer,cx+1,cy+1,ch,0,fg);
                            ^
 buffer.c:39:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  void buf_put_ch_with_color(CHAR_INFO* buf, int x, int y, char ch,char bg_color,char fg_color)
       ^
-buffer.c:141:17: warning: passing argument 1 of 'buffer_draw_hp' from incompatible pointer type
+buffer.c:150:20: warning: passing argument 1 of 'buffer_draw_coord' from incompatible pointer type
+  buffer_draw_coord(buffer,hero,0,12);
+                    ^
+buffer.c:76:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+ void buffer_draw_coord(CHAR_INFO* buf, Actor* a, int x, int y)
+      ^
+buffer.c:151:17: warning: passing argument 1 of 'buffer_draw_hp' from incompatible pointer type
   buffer_draw_hp(buffer,hero,0,13);//display hero's hp at x ==0 y == 13
                  ^
-buffer.c:76:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
+buffer.c:82:6: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  void buffer_draw_hp(CHAR_INFO* buf,Actor* a, int x, int y)
       ^
 win.c: In function 'get_input_2':
@@ -89,7 +95,7 @@ win.c: In function 'select_menu':
 win.c:78:10: warning: passing argument 1 of 'buf_put' from incompatible pointer type
   buf_put(buf,"[ 1. Play Game          ]",0,2);
           ^
-In file included from header.h:43:0,
+In file included from header.h:44:0,
                  from win.c:1:
 proto.h:21:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  extern void buf_put(CHAR_INFO *buf, char *str, int x, int y);
@@ -97,7 +103,7 @@ proto.h:21:13: note: expected 'struct CHAR_INFO *' but argument is of type 'stru
 win.c:79:10: warning: passing argument 1 of 'buf_put' from incompatible pointer type
   buf_put(buf,"[ 2. Shutdown Game      ]",0,3);
           ^
-In file included from header.h:43:0,
+In file included from header.h:44:0,
                  from win.c:1:
 proto.h:21:13: note: expected 'struct CHAR_INFO *' but argument is of type 'struct CHAR_INFO (*)[80]'
  extern void buf_put(CHAR_INFO *buf, char *str, int x, int y);
