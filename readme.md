@@ -1,8 +1,10 @@
-# ÇÃ·¹ÀÌ ¿µ»ó
+# í”Œë ˆì´ ì˜ìƒ
+
+[![Join the chat at https://gitter.im/2d-creeper/Lobby](https://badges.gitter.im/2d-creeper/Lobby.svg)](https://gitter.im/2d-creeper/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![alt tag](https://github.com/x86poem/2d-creeper/blob/master/Animation.gif)
 
-# »ç¿ë °¡´É ÇÑ Å°
-À§·Î ÀÌµ¿: w
-¾Æ·¡·Î ÀÌµ¿: s
-¿ŞÂÊÀ¸·Î ÀÌµ¿: a
-¿À¸¥ÂÊÀ¸·Î ÀÌµ¿: d
+# ì‚¬ìš© ê°€ëŠ¥ í•œ í‚¤
+ìœ„ë¡œ ì´ë™: w
+ì•„ë˜ë¡œ ì´ë™: s
+ì™¼ìª½ìœ¼ë¡œ ì´ë™: a
+ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì´ë™: d
